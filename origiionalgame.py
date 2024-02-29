@@ -53,5 +53,5 @@ graph ={'A': Node('A', None, [('B',4),('C',2),('D',3)], 0, 0, 100),
 
 source_node = Node(graph['A'].city, None, graph['A'].actions, 0, 0, 0)
 
-spawn_aliens_bfs(graph,source_node)
+result = spawn_aliens_bfs(graph,source_node)
 
