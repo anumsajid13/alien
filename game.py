@@ -38,7 +38,7 @@ class AlienInvasionGame:
             civilians = random.randint(50, 200)
             weapons_needed = self.calculate_weapons_needed(alien_quota, civilians)
             
-            # Update game state
+            # Update game state 
             self.weapons_used[current_city] += weapons_needed
             self.civilians_saved[next_city] += civilians
 
