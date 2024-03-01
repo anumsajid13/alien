@@ -1,6 +1,8 @@
 from collections import deque
 import random
 
+troops = 2000
+
 class Node:
     def __init__(self,city,parent,actions,total_cost,alien,civilian):
         self.city = city
@@ -10,6 +12,25 @@ class Node:
         self.alien = alien
         self.civilian = civilian
 
+def war_fought(node):
+    global troops
+    print(f"city: {node.city}")
+
+    #calculate the expected reduced troops
+    expected_troop_count = troops - (node.alien // 3)
+
+    troops = expected_troop_count
+
+    print(f"troops: {troops}")
+
+    #clculate the expected reduced civilians
+    expected_civilian_count = node.civilian - (node.alien // 5)
+
+    node.civilian = expected_civilian_count
+
+    print(f"civilians: {node.civilian}")
+
+    
 def spawn_aliens_bfs(graph, source):
     
     frontier = deque([source])
@@ -22,8 +43,11 @@ def spawn_aliens_bfs(graph, source):
 
         #randomly generate aliens in each city 
         current_node.alien = random.randint(100, 500)
+        current_node.civilian = random.randint(500, 1000)
 
         print(f"Node: {current_node.city}, Random Aliens spawned: {current_node.alien}")
+
+        print(f"Node: {current_node.city}, Civilian Population: {current_node.civilian}")
 
         visited_nodes.add(current_node.city)
 
@@ -42,6 +66,7 @@ def spawn_aliens_bfs(graph, source):
     return all_paths
 
 
+
 graph ={'A': Node('A', None, [('B',4),('C',2),('D',3)], 0, 0, 100),
         'B': Node('B', None, [('E',5),('A',4)], 0, 0, 300),
         'C': Node('C', None, [('A',2),('D',1),('Alexendria',5)], 0, 0, 600),
@@ -54,4 +79,10 @@ graph ={'A': Node('A', None, [('B',4),('C',2),('D',3)], 0, 0, 100),
 source_node = Node(graph['A'].city, None, graph['A'].actions, 0, 0, 0)
 
 result = spawn_aliens_bfs(graph,source_node)
+
+war_fought(source_node)
+
+
+
+
 
